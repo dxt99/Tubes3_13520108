@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap');
+
+body {
+  margin: 0px;
+  position: relative;
+  width: 95vw;
+  height: 95vh;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 23px;
+
+  background: #DCEAFF;
+}
+
+.box {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 0px;
+
+  position: absolute;
+  width: 250px;
+  height: 100vh;
+  left: 0px;
+  top: 100px;
+
+  background: #FFFFFF;
+
+  color: #000000;
+}
+
+.logo{
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  position: static;
+  width: 250px;
+  height: 100px;
+  left: 0px;
+  top: 0px;
+
+  background: #A6D4FF;
+
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  margin: 0px 0px;
+
+  font-family: 'Comfortaa';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 36px;
+
+  background: #A6D4FF;
+}
+
+.button{
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+
+  position: static;
+  width: 249px;
+  height: 43px;
+  left: 0px;
+
+  background: #FFFFFF;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  margin: 30px 0px;
+}
+
+.helloWorld{
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+
+  position: absolute;
+  width: 250px;
+  height: 43px;
+  left: 50vw;
+  top: 469px;
+
+  background: #FFFFFF;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.result{
+  position: absolute;
+  width: 300px;
+  height: 23px;
+  left: 50vw;
+  top: 558px;
+}
+.titleBar{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  position: static;
+  width: 99.1vw;
+  height: 100px;
+  right: 0px;
+  top: 0px;
+  padding: 0px 0px 0px 0px;
+
+  background: #FFFFFF;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  margin: 0px 0px;
+}
+
+.title{
+  position: static;
+  height: 23px;
+  left: 300px;
+  top: 38.5px;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  margin: 0px 50px;
+}
