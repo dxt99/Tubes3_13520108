@@ -37,3 +37,39 @@ func LCS(target string, pattern string) float64 {
 
 	return float64(dp[n][m]) / float64(m)
 }
+
+// Checks whether pattern exists in target
+// Uses boyer moore algorithm
+func BoyerMoore(target string, pattern string) bool {
+
+	n := len(target)
+	m := len(pattern)
+
+	// Preprocessing
+	s := make([]int, 256) //ascii characters
+	for i := range s {
+		s[i] = -1
+	}
+	for i, val := range pattern {
+		s[int(val)] = i
+	}
+
+	// String Matching
+	for k := 0; k <= (n - m); {
+		l := m - 1
+		for l >= 0 && pattern[l] == target[k+l] {
+			l--
+		}
+		if l >= 0 {
+			shift := l - s[int(target[k+l])]
+			if shift < 1 {
+				shift = 1
+			}
+			k = k + shift
+		} else {
+			return true
+		}
+	}
+
+	return false
+}
