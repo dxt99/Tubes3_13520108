@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { BrowserRouter, Link, Routes, Route } from 'react-router-dom';
+import { Form } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function SideBars(title){
   return (
@@ -39,21 +41,40 @@ class TambahPenyakit extends React.Component{
 }
 
 class TesDNA extends React.Component{
-  constructor(props){
-    super(props);
-    this.state = {message: ""};
-  }
+  // constructor(props){
+  //   super(props);
+  //   this.state = {message: ""};
+  // }
   render(){
     return(
       <div>
-        {SideBars("Tes DNA")}
-        <button className='helloWorld' onClick={() => this.CallBackend()}>
-          {"Hello World!"}
-        </button>
-        <div className='result'>
-          {this.state.message}
+        {SideBars("Tes DNA")} 
+        <div className = "form">
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Nama Pengguna:</Form.Label>
+              <Form.Control type="text"></Form.Control>
+              <Form.Label>Prediksi Penyakit:</Form.Label>
+              <Form.Control type="text"></Form.Control>
+              <Form.Select className="mt-3">
+                <option>Pilih algoritma string matching</option>
+                <option value="KMP">KMP</option>
+                <option value="Boyer-Moore">Boyer-Moore</option>
+              </Form.Select>
+            </Form.Group>  
+          </Form>
         </div>
       </div>
+
+      // <div>
+      //   {SideBars("Tes DNA")}
+      //   <button className='helloWorld' onClick={() => this.CallBackend()}>
+      //     {"Hello World!"}
+      //   </button>
+      //   <div className='result'>
+      //     {this.state.message}
+      //   </div>
+      // </div>
     );
   }
   

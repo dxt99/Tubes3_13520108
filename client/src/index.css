@@ -113,6 +113,12 @@ body {
   left: 50vw;
   top: 558px;
 }
+
+.form {
+  margin-left: 400px;
+  margin-right: 200px;
+}
+
 .titleBar{
   display: flex;
   flex-direction: row;
