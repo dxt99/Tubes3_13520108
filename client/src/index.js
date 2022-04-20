@@ -51,13 +51,13 @@ class TesDNA extends React.Component{
         {SideBars("Tes DNA")} 
         <div className = "form">
           <Form>
-            <Form.Group className="mb-3">
+            <Form.Group className="mb-5">
               <Form.Label>Nama Pengguna:</Form.Label>
-              <Form.Control type="text"></Form.Control>
-              <Form.Label>Prediksi Penyakit:</Form.Label>
-              <Form.Control type="text"></Form.Control>
-              <Form.Select className="mt-3">
-                <option>Pilih algoritma string matching</option>
+              <Form.Control type="text" placeholder="Masukkan nama pengguna"></Form.Control>
+              <Form.Label className="mt-3">Prediksi Penyakit:</Form.Label>
+              <Form.Control type="text" placeholder="Masukkan prediksi penyakit"></Form.Control>
+              <Form.Label className="mt-3">Pilih algoritma string matching:</Form.Label>
+              <Form.Select>
                 <option value="KMP">KMP</option>
                 <option value="Boyer-Moore">Boyer-Moore</option>
               </Form.Select>
