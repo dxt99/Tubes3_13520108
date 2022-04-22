@@ -46,14 +46,10 @@ func helloWorld(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	//port := "3001"
-	connect()
-	/*
-		mux := http.NewServeMux()
+	port := "3001"
+	mux := http.NewServeMux()
 
-		mux.HandleFunc("/", indexHandler)
-		mux.HandleFunc("/helloWorld", helloWorld)
-		http.ListenAndServe(":"+port, mux)
-
-	*/
+	mux.HandleFunc("/", indexHandler)
+	mux.HandleFunc("/helloWorld", helloWorld)
+	http.ListenAndServe(":"+port, mux)
 }
