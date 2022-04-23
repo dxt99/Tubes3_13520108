@@ -87,7 +87,7 @@ func tambahPenyakit(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// POST METHOD:
+// FETCH METHOD:
 // pengguna -> nama pengguna
 // nama -> nama penyakit
 // DNA -> string DNA
