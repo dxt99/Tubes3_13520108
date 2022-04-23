@@ -4,6 +4,10 @@ import './index.css';
 import { BrowserRouter, Link, Routes, Route } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
+import HomeIcon from '@mui/icons-material/Home';
+import CoronavirusIcon from '@mui/icons-material/Coronavirus';
+import ScienceIcon from '@mui/icons-material/Science';
+import HistoryIcon from '@mui/icons-material/History';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function SideBars(title){
@@ -14,10 +18,22 @@ function SideBars(title){
         <div className = "title">{title}</div>
       </div>
       <div className="box">
-        <Link to='/' style={{ textDecoration: 'none' }}><div className= "button">{"About"}</div></Link>
-        <Link to='/tambahPenyakit' style={{ textDecoration: 'none' }}><div className= "button">{"Tambah Penyakit"}</div></Link>
-        <Link to='/tesDNA' style={{ textDecoration: 'none' }}><div className= "button">{"Tes DNA"}</div></Link>
-        <Link to='/riwayatTes' style={{ textDecoration: 'none' }}><div className= "button">{"Riwayat Tes"}</div></Link>
+        <Link className="sidebarList" to='/' style={{ textDecoration: 'none' }}>
+          <div className="sidebarIcon"><HomeIcon/></div>
+          <div className="sidebarMenu">{"About"}</div>
+        </Link>
+        <Link className="sidebarList" to='/tambahPenyakit' style={{ textDecoration: 'none' }}>
+          <div className="sidebarIcon"><CoronavirusIcon/></div>
+          <div className="sidebarMenu">{"Tambah Penyakit"}</div>
+        </Link>
+        <Link className="sidebarList" to='/tesDNA' style={{ textDecoration: 'none' }}>
+          <div className="sidebarIcon"><ScienceIcon/></div>
+          <div className="sidebarMenu">{"Tes DNA"}</div>
+        </Link>
+        <Link className="sidebarList" to='/riwayatTes' style={{ textDecoration: 'none' }}>
+          <div className="sidebarIcon"><HistoryIcon/></div>
+          <div className="sidebarMenu">{"Riwayat Tes"}</div>
+        </Link>
       </div>
     </div>
   );
