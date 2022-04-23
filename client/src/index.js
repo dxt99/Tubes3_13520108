@@ -31,15 +31,36 @@ function Home(){
   );
 }
 
-class TambahPenyakit extends React.Component{
-  render(){
-    return(
-      <div>
-        {SideBars("Tambah Penyakit")}
-      </div>
-    );
+function TambahPenyakit() {
+  const {
+    register, 
+    handleSubmit,
+  } = useForm();
+  const onSubmit = (data) => {
+    const reader = new FileReader();
+    console.log(data);
+    reader.readAsText(data.DNAsequence[0]);
+    reader.onload = function(e) {
+      var rawLog = reader.result;
+    }
   }
-}
+  return(
+    <div>
+      {SideBars("Tambah Penyakit")}
+      <div className = "form">
+        <Form>
+          <Form.Group className="mb-5">
+            <Form.Label>Nama Penyakit:</Form.Label>
+            <Form.Control required type="text" placeholder="Masukkan nama penyakit" {...register("namaPengguna")}></Form.Control>
+            <Form.Label className="mt-3">Unggah file teks rantai DNA:</Form.Label>
+            <Form.Control type="file" {...register("DNAsequence")}></Form.Control>
+            <Button className="mt-3" type="button" onClick = {handleSubmit(onSubmit)}>Submit</Button>
+          </Form.Group>  
+        </Form>
+      </div>
+    </div>
+  )
+};
 
 function DNAForm() {
   const {
@@ -52,8 +73,8 @@ function DNAForm() {
     reader.readAsText(data.DNAsequence[0]);
     reader.onload = function(e) {
       var rawLog = reader.result;
-      console.log(rawLog);
     }
+    
   }
   return (
     <div>
