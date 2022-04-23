@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { BrowserRouter, Link, Routes, Route } from 'react-router-dom';
-import { Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function SideBars(title){
@@ -61,6 +61,9 @@ class TesDNA extends React.Component{
                 <option value="KMP">KMP</option>
                 <option value="Boyer-Moore">Boyer-Moore</option>
               </Form.Select>
+              <Form.Label className="mt-3">Unggah file teks rantai DNA:</Form.Label>
+              <Form.Control type="file"></Form.Control>
+              <Button className="mt-3" type="button">Submit</Button>
             </Form.Group>  
           </Form>
         </div>
