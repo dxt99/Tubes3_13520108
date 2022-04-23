@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
+	"time"
 
 	_ "github.com/lib/pq"
 )
@@ -43,13 +44,12 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 // POST METHOD:
 // nama -> nama penyakit
 // DNA -> string DNA
-func tesDNA(w http.ResponseWriter, r *http.Request) {
+func tambahPenyakit(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	if r.URL.Path != "/TesDNA" {
 		fmt.Fprintf(w, "404 not found")
 		return
 	}
-	fmt.Fprintf(w, "Penyakit berhasil ditambahkan")
 
 	switch r.Method {
 	case "POST":
@@ -60,6 +60,11 @@ func tesDNA(w http.ResponseWriter, r *http.Request) {
 		}
 		nama := r.FormValue("nama")
 		DNA := r.FormValue("DNA")
+
+		if len(nama) == 0 {
+			fmt.Fprintf(w, "Nama kosong")
+			return
+		}
 
 		if !IsDNA(DNA) {
 			fmt.Fprintf(w, "File tidak berisi DNA")
@@ -75,8 +80,80 @@ func tesDNA(w http.ResponseWriter, r *http.Request) {
 			fmt.Fprintf(w, "Penyakit sudah ada")
 			return
 		}
+		fmt.Fprintf(w, "Penyakit berhasil ditambahkan")
+		return
 	default:
 		fmt.Fprintf(w, "Sorry, only POST methods are supported.")
+	}
+}
+
+// POST METHOD:
+// pengguna -> nama pengguna
+// nama -> nama penyakit
+// DNA -> string DNA
+// Metode -> metode pencarian, sementara tidak digunakan
+func tesDNA(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	if r.URL.Path != "/TesDNA" {
+		fmt.Fprintf(w, "404 not found")
+		return
+	}
+
+	switch r.Method {
+	case "FETCH":
+		// Call ParseForm() to parse the raw query and update r.PostForm and r.Form.
+		if err := r.ParseForm(); err != nil {
+			fmt.Fprintf(w, "ParseForm() err: %v", err)
+			return
+		}
+		pengguna := r.FormValue("pengguna")
+		nama := r.FormValue("nama")
+		DNA := r.FormValue("DNA")
+
+		if len(nama) == 0 {
+			fmt.Fprintf(w, "Nama kosong")
+			return
+		}
+
+		if !IsDNA(DNA) {
+			fmt.Fprintf(w, "File tidak berisi DNA")
+			return
+		}
+
+		// Get DNA File
+		db := connect()
+		query := "SELECT \"DNA\", \"IDPenyakit\" FROM public.penyakit WHERE \"NamaPenyakit\" = $1"
+		rows, err := db.Query(query, nama)
+		defer rows.Close()
+		defer db.Close()
+
+		if err != nil {
+			fmt.Fprintf(w, "Penyakit belum ditambahkan")
+			return
+		}
+		var pattern string
+		var IDPenyakit int
+		for rows.Next() {
+			rows.Scan(&pattern, &IDPenyakit)
+		}
+
+		// Check method
+		var similarity float64 = 0
+		isSame := BoyerMoore(DNA, pattern)
+		if !isSame {
+			similarity = LCS(DNA, pattern)
+		} else {
+			similarity = 1
+		}
+
+		query = "INSERT INTO public.hasil (\"Tanggal\", \"Pengguna\", \"IDPenyakit\", \"Similarity\") VALUES ($1, $2, $3, $4)"
+		_, err = db.Exec(query, time.Now().Format("2006-01-02"), pengguna, IDPenyakit, similarity)
+		if err != nil {
+			fmt.Fprintf(w, "Unknown Error")
+			return
+		}
+		fmt.Fprintf(w, "Tes Sukses")
+		return
 	}
 }
 
@@ -84,6 +161,7 @@ func main() {
 	port := "3001"
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", indexHandler)
+	mux.HandleFunc("/TambahPenyakit", tambahPenyakit)
 	mux.HandleFunc("/TesDNA", tesDNA)
 	http.ListenAndServe(":"+port, mux)
 }
