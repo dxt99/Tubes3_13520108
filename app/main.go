@@ -61,6 +61,11 @@ func tesDNA(w http.ResponseWriter, r *http.Request) {
 		nama := r.FormValue("nama")
 		DNA := r.FormValue("DNA")
 
+		if !IsDNA(DNA) {
+			fmt.Fprintf(w, "File tidak berisi DNA")
+			return
+		}
+
 		//connect to db
 		db := connect()
 		query := "INSERT INTO public.penyakit (\"NamaPenyakit\", \"DNA\") VALUES ($1, $2)"
@@ -68,6 +73,7 @@ func tesDNA(w http.ResponseWriter, r *http.Request) {
 		db.Close()
 		if err != nil {
 			fmt.Fprintf(w, "Penyakit sudah ada")
+			return
 		}
 	default:
 		fmt.Fprintf(w, "Sorry, only POST methods are supported.")
