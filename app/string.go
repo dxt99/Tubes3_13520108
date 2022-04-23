@@ -1,5 +1,13 @@
 package main
 
+import "regexp"
+
+// Checks whether input is a DNA using regex
+func IsDNA(DNA string) bool {
+	regex, _ := regexp.Compile(`[GTCA]+`)
+	return regex.MatchString(DNA)
+}
+
 // Checks longest subsequence of pattern in target,
 // returns length of the subsequence divided by pattern length
 func LCS(target string, pattern string) float64 {
