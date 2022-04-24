@@ -1,8 +1,11 @@
 package main
 
 import (
+	"bytes"
 	"database/sql"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"time"
 
@@ -94,6 +97,13 @@ func tambahPenyakit(w http.ResponseWriter, r *http.Request) {
 // nama -> nama penyakit
 // DNA -> string DNA
 // Metode -> metode pencarian, sementara tidak digunakan
+type Form struct {
+	NamaPengguna     string `json:"namaPengguna"`
+	PrediksiPenyakit string `json:"prediksiPenyakit"`
+	Algoritma        string `json:"algoritma"`
+	DNA              string `json:"DNA"`
+}
+
 func tesDNA(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
@@ -103,15 +113,23 @@ func tesDNA(w http.ResponseWriter, r *http.Request) {
 	}
 
 	switch r.Method {
-	case "FETCH":
-		// Call ParseForm() to parse the raw query and update r.PostForm and r.Form.
-		if err := r.ParseForm(); err != nil {
-			fmt.Fprintf(w, "ParseForm() err: %v", err)
-			return
+	case "POST":
+		// Read the content
+
+		var bodyBytes []byte
+		if r.Body != nil {
+			bodyBytes, _ = ioutil.ReadAll(r.Body)
 		}
-		pengguna := r.FormValue("pengguna")
-		nama := r.FormValue("nama")
-		DNA := r.FormValue("DNA")
+		// Restore the io.ReadCloser to its original state
+		r.Body = ioutil.NopCloser(bytes.NewBuffer(bodyBytes))
+		fmt.Println(string(bodyBytes))
+		// Use the content
+		var p Form
+		json.Unmarshal([]byte(string(bodyBytes)), &p)
+		fmt.Println(p)
+		pengguna := p.NamaPengguna
+		nama := p.PrediksiPenyakit
+		DNA := p.DNA
 
 		if len(nama) == 0 {
 			fmt.Fprintf(w, "Nama kosong")
