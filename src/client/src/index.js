@@ -63,12 +63,8 @@ function TambahPenyakit() {
     });
     promise.then(function(resolvedValue) {
       data["DNA"] = resolvedValue;
-      axios.post("http://localhost:3001/TambahPenyakit", {
-        headers: {'Content-Type' : 'application/json'}, 
-        credentials: true,
-        optionSuccessStatus:200,
-        data: data,
-      }).then(response => {
+      console.log(data);
+      axios.post("http://localhost:3001/TambahPenyakit", data).then(response => {
         console.log(response);
         console.log(response.data);
       });
@@ -81,7 +77,7 @@ function TambahPenyakit() {
         <Form>
           <Form.Group className="mb-5">
             <Form.Label>Nama Penyakit:</Form.Label>
-            <Form.Control required type="text" placeholder="Masukkan nama penyakit" {...register("namaPengguna")}></Form.Control>
+            <Form.Control required type="text" placeholder="Masukkan nama penyakit" {...register("namaPenyakit")}></Form.Control>
             <Form.Label className="mt-3">Unggah file teks rantai DNA:</Form.Label>
             <Form.Control type="file" {...register("DNA")}></Form.Control>
             <Button className="mt-3" type="button" onClick = {handleSubmit(onSubmit)}>Submit</Button>
