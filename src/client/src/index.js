@@ -94,11 +94,13 @@ function TesDNA() {
     });
     promise.then(function(resolvedValue) {
       data["DNA"] = resolvedValue;
-      axios.post("http://localhost:3001/TesDNA", data)
-        .then(response => {
-          console.log(response);
-          console.log(response.data);
-        })
+      axios.post("http://localhost:3001/TesDNA", {
+        headers: {"Access-Control-Allow-Origin": "*"}, 
+        data: data,
+      }).then(response => {
+        console.log(response);
+        console.log(response.data);
+      });
     });
   }
   return (
@@ -123,7 +125,7 @@ function TesDNA() {
           </Form>
         </div>
       </div>
-  )
+    )
 };
 
 class RiwayatTes extends React.Component{
