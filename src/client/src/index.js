@@ -11,14 +11,15 @@ import HistoryIcon from '@mui/icons-material/History';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function SideBars(title){
+function SideBars(title, paragraph){
   return (
     <div>
       <div className = "titleBar">
-        <div className= "logo">{"Malignant"}</div>
-        <div className = "title">{title}</div>
+        <h1 className = "titleHeading mb-3">{title}</h1>
+        <p className = "paragraph mb-5">{paragraph}</p>
       </div>
       <div className="box">
+        <div className= "logo">{"Malignant"}</div>
         <Link className="sidebarList" to='/' style={{ textDecoration: 'none' }}>
           <div className="sidebarIcon"><HomeIcon/></div>
           <div className="sidebarMenu">{"About"}</div>
@@ -43,7 +44,7 @@ function SideBars(title){
 function Home(){
   return (
     <div>
-      {SideBars("About")}
+      {SideBars("Tentang Kami")}
     </div>
   );
 }
@@ -72,7 +73,7 @@ function TambahPenyakit() {
   }
   return(
     <div>
-      {SideBars("Tambah Penyakit")}
+      {SideBars("Tambahkan DNA Penyakit", `Tambahkan DNA penyakit agar jangkauan tes semakin luas!`)}
       <div className = "form">
         <Form>
           <Form.Group className="mb-5">
@@ -112,7 +113,10 @@ function TesDNA() {
   }
   return (
     <div>
-        {SideBars("Tes DNA")} 
+        {SideBars("Tes DNA Anda Sekarang!", `Ketika seseorang memiliki kelainan genetik atau DNA,
+          misalnya karena penyakit keturunan atau karena faktor lainnya, ia bisa mengalami penyakit
+          tertentu. Oleh karena itu, tes DNA penting untuk dilakukan untuk mengetahui struktur genetik di
+          dalam tubuh seseorang serta mendeteksi kelainan genetik.`)} 
         <div className = "form">
           <Form>
             <Form.Group className="mb-5">
@@ -139,7 +143,8 @@ class RiwayatTes extends React.Component{
   render(){
     return(
       <div>
-        {SideBars("Riwayat Tes")}
+        {SideBars("Riwayat Tes Anda", `Melihat semua riwayat tes Anda dalam satu genggaman. 
+        Segera konsultasikan kepada ahlinya mengenai riwayat tes Anda!`)}
       </div>
     );
   }

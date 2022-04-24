@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&family=Roboto:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,700&display=swap');
 
 body {
   margin: 0px;
@@ -23,11 +24,12 @@ body {
   align-items: center;
   padding: 60px 0px;
 
-  position: absolute;
+  position: fixed;
   width: 270px;
   height: 100vh;
   left: 0px;
-  top: 100px;
+  top: 0px;
+  bottom: 0px;
   background: #1D5C63;
 
   color: #000000;
@@ -59,8 +61,7 @@ body {
 }
 
 .form {
-  margin-left: 400px;
-  margin-right: 200px;
+  margin: 50px 200px 0px 400px;
 }
 
 .helloWorld{
@@ -111,6 +112,10 @@ body {
   color: white
 }
 
+.paragraph {
+  font-size: 18px;
+}
+
 .result{
   position: absolute;
   width: 300px;
@@ -149,37 +154,20 @@ body {
 
 
 .titleBar{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  display: block;
+  align-items: left;
 
-  position: static;
-  width: 99.1vw;
-  height: 100px;
+  width: 100vw;
+  height: 300px;
   right: 0px;
   top: 0px;
-  padding: 0px 0px 0px 0px;
-
-  background: #FFFFFF;
-
-  /* Inside auto layout */
-
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-  margin: 0px 0px;
+  padding: 70px 100px 100px 300px;
+  
+  color: white;
+  background: #069A8E;
 }
 
-.title{
-  position: static;
-  height: 23px;
-  left: 300px;
-  top: 38.5px;
-
-  /* Inside auto layout */
-
-  flex: none;
-  order: 1;
-  flex-grow: 0;
-  margin: 0px 50px;
+.titleHeading {
+  font-size: 60px;
+  font-family: 'Lato', sans-serif;
 }
