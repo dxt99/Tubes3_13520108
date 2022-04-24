@@ -95,7 +95,9 @@ function TesDNA() {
     promise.then(function(resolvedValue) {
       data["DNA"] = resolvedValue;
       axios.post("http://localhost:3001/TesDNA", {
-        headers: {"Access-Control-Allow-Origin": "*"}, 
+        headers: {'Content-Type' : 'application/json'}, 
+        credentials: true,
+        optionSuccessStatus:200,
         data: data,
       }).then(response => {
         console.log(response);

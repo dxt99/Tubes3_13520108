@@ -37,6 +37,7 @@ func connect() *sql.DB {
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Write([]byte("<h1>Backend Server!</h1>"))
 }
@@ -46,6 +47,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 // DNA -> string DNA
 func tambahPenyakit(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	if r.URL.Path != "/TesDNA" {
 		fmt.Fprintf(w, "404 not found")
 		return
@@ -94,6 +96,7 @@ func tambahPenyakit(w http.ResponseWriter, r *http.Request) {
 // Metode -> metode pencarian, sementara tidak digunakan
 func tesDNA(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	if r.URL.Path != "/TesDNA" {
 		fmt.Fprintf(w, "404 not found")
 		return
