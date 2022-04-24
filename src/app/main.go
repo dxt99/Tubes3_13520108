@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bytes"
 	"database/sql"
 	"encoding/json"
 	"fmt"
@@ -48,6 +47,11 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 // POST METHOD:
 // nama -> nama penyakit
 // DNA -> string DNA
+type Insert struct {
+	Nama string `json:"namaPenyakit"`
+	DNA  string `json:"DNA"`
+}
+
 func tambahPenyakit(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
@@ -58,13 +62,15 @@ func tambahPenyakit(w http.ResponseWriter, r *http.Request) {
 
 	switch r.Method {
 	case "POST":
-		// Call ParseForm() to parse the raw query and update r.PostForm and r.Form.
-		if err := r.ParseForm(); err != nil {
-			fmt.Fprintf(w, "ParseForm() err: %v", err)
-			return
+		var bodyBytes []byte
+		if r.Body != nil {
+			bodyBytes, _ = ioutil.ReadAll(r.Body)
 		}
-		nama := r.FormValue("nama")
-		DNA := r.FormValue("DNA")
+		// Use the content
+		var p Insert
+		json.Unmarshal(bodyBytes, &p)
+		nama := p.Nama
+		DNA := p.DNA
 
 		if len(nama) == 0 {
 			fmt.Fprintf(w, "Nama kosong")
@@ -92,7 +98,7 @@ func tambahPenyakit(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// FETCH METHOD:
+// POST METHOD:
 // pengguna -> nama pengguna
 // nama -> nama penyakit
 // DNA -> string DNA
@@ -120,13 +126,9 @@ func tesDNA(w http.ResponseWriter, r *http.Request) {
 		if r.Body != nil {
 			bodyBytes, _ = ioutil.ReadAll(r.Body)
 		}
-		// Restore the io.ReadCloser to its original state
-		r.Body = ioutil.NopCloser(bytes.NewBuffer(bodyBytes))
-		fmt.Println(string(bodyBytes))
 		// Use the content
 		var p Form
-		json.Unmarshal([]byte(string(bodyBytes)), &p)
-		fmt.Println(p)
+		json.Unmarshal(bodyBytes, &p)
 		pengguna := p.NamaPengguna
 		nama := p.PrediksiPenyakit
 		DNA := p.DNA
