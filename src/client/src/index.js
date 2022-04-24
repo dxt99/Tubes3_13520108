@@ -94,7 +94,7 @@ function TesDNA() {
     });
     promise.then(function(resolvedValue) {
       data["DNA"] = resolvedValue;
-      axios.post("http://localhost:3001/TesDNA")
+      axios.post("http://localhost:3001/TesDNA", data)
         .then(response => {
           console.log(response);
           console.log(response.data);
