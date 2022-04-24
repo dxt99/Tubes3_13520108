@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import axios from 'axios';
 import { BrowserRouter, Link, Routes, Route } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
@@ -8,6 +8,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import CoronavirusIcon from '@mui/icons-material/Coronavirus';
 import ScienceIcon from '@mui/icons-material/Science';
 import HistoryIcon from '@mui/icons-material/History';
+import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function SideBars(title){
@@ -78,19 +79,27 @@ function TambahPenyakit() {
   )
 };
 
-function DNAForm() {
+function TesDNA() {
   const {
     register, 
     handleSubmit,
   } = useForm();
   const onSubmit = (data) => {
     const reader = new FileReader();
-    console.log(data)
-    reader.readAsText(data.DNAsequence[0]);
-    reader.onload = function(e) {
-      var rawLog = reader.result;
-    }
-    
+    var promise = new Promise(function(resolve) { // use promise to wait for DNA text result
+      reader.onload = function() {
+        resolve(reader.result);
+      };
+      reader.readAsText(data.DNA[0]);
+    });
+    promise.then(function(resolvedValue) {
+      data["DNA"] = resolvedValue;
+      axios.post("http://localhost:3001/TesDNA")
+        .then(response => {
+          console.log(response);
+          console.log(response.data);
+        })
+    });
   }
   return (
     <div>
@@ -108,7 +117,7 @@ function DNAForm() {
                 <option value="Boyer-Moore">Boyer-Moore</option>
               </Form.Select>
               <Form.Label className="mt-3">Unggah file teks rantai DNA:</Form.Label>
-              <Form.Control type="file" {...register("DNAsequence")}></Form.Control>
+              <Form.Control type="file" {...register("DNA")}></Form.Control>
               <Button className="mt-3" type="button" onClick = {handleSubmit(onSubmit)}>Submit</Button>
             </Form.Group>  
           </Form>
@@ -116,52 +125,6 @@ function DNAForm() {
       </div>
   )
 };
-  
-
-// class TesDNA extends React.Component{
-//   render(){
-//     return(
-//       <div>
-//         {SideBars("Tes DNA")} 
-//         <div className = "form">
-//           <Form>
-//             <Form.Group className="mb-5">
-//               <Form.Label>Nama Pengguna:</Form.Label>
-//               <Form.Control required type="text" name="namaPengguna" placeholder="Masukkan nama pengguna" ref={register()}></Form.Control>
-//               <Form.Label className="mt-3">Prediksi Penyakit:</Form.Label>
-//               <Form.Control type="text" name="prediksiPenyakit" placeholder="Masukkan prediksi penyakit" ref={register()}></Form.Control>
-//               <Form.Label className="mt-3">Pilih algoritma string matching:</Form.Label>
-//               <Form.Select name="algoritma" ref={register()}>
-//                 <option value="KMP">KMP</option>
-//                 <option value="Boyer-Moore">Boyer-Moore</option>
-//               </Form.Select>
-//               <Form.Label className="mt-3">Unggah file teks rantai DNA:</Form.Label>
-//               <Form.Control type="file" name="teksDNA" ref={register()}></Form.Control>
-//               <Button className="mt-3" type="button" onClick = {handleSubmit(onSubmit)}>Submit</Button>
-//             </Form.Group>  
-//           </Form>
-//         </div>
-//       </div>
-
-//       // <div>
-//       //   {SideBars("Tes DNA")}
-//       //   <button className='helloWorld' onClick={() => this.CallBackend()}>
-//       //     {"Hello World!"}
-//       //   </button>
-//       //   <div className='result'>
-//       //     {this.state.message}
-//       //   </div>
-//       // </div>
-//     );
-//   }
-  
-//   async CallBackend(){
-//     let Response = await fetch("http://localhost:3001/helloWorld").catch(err => err);
-//     let Text = await Response.text();
-//     this.setState({message: Text});
-
-//   }
-// }
 
 class RiwayatTes extends React.Component{
   render(){
@@ -178,7 +141,7 @@ ReactDOM.render (
     <Routes>
       <Route path='/' element={<Home/>}></Route>
       <Route path='/tambahPenyakit' element={<TambahPenyakit/>}></Route>
-      <Route path='/tesDNA' element={<DNAForm/>}></Route>
+      <Route path='/tesDNA' element={<TesDNA/>}></Route>
       <Route path='/riwayatTes' element={<RiwayatTes/>}></Route>
     </Routes>
   </BrowserRouter>,
