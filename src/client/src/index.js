@@ -55,11 +55,24 @@ function TambahPenyakit() {
   } = useForm();
   const onSubmit = (data) => {
     const reader = new FileReader();
-    console.log(data);
-    reader.readAsText(data.DNAsequence[0]);
-    reader.onload = function(e) {
-      var rawLog = reader.result;
-    }
+    var promise = new Promise(function(resolve) { // use promise to wait for DNA text result
+      reader.onload = function() {
+        resolve(reader.result);
+      };
+      reader.readAsText(data.DNA[0]);
+    });
+    promise.then(function(resolvedValue) {
+      data["DNA"] = resolvedValue;
+      axios.post("http://localhost:3001/TambahPenyakit", {
+        headers: {'Content-Type' : 'application/json'}, 
+        credentials: true,
+        optionSuccessStatus:200,
+        data: data,
+      }).then(response => {
+        console.log(response);
+        console.log(response.data);
+      });
+    });
   }
   return(
     <div>
@@ -70,7 +83,7 @@ function TambahPenyakit() {
             <Form.Label>Nama Penyakit:</Form.Label>
             <Form.Control required type="text" placeholder="Masukkan nama penyakit" {...register("namaPengguna")}></Form.Control>
             <Form.Label className="mt-3">Unggah file teks rantai DNA:</Form.Label>
-            <Form.Control type="file" {...register("DNAsequence")}></Form.Control>
+            <Form.Control type="file" {...register("DNA")}></Form.Control>
             <Button className="mt-3" type="button" onClick = {handleSubmit(onSubmit)}>Submit</Button>
           </Form.Group>  
         </Form>
