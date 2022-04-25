@@ -50,12 +50,16 @@ function Home(){
 }
 
 function TambahPenyakit() {
+  const [submitting, setSubmitting] = useState(false);
+  const [items, setItems] = useState("");
+
   const {
     register, 
     handleSubmit,
   } = useForm();
 
   const onSubmit = (data) => {
+    
     const reader = new FileReader();
     var promise = new Promise(function(resolve) { // use promise to wait for DNA text result
       reader.onload = function() {
@@ -69,6 +73,8 @@ function TambahPenyakit() {
       axios.post("http://localhost:3001/TambahPenyakit", data).then(response => {
         console.log(response);
         console.log(response.data);
+        setItems(response.data);
+        setSubmitting(true);      
       });
     });
   }
@@ -86,6 +92,9 @@ function TambahPenyakit() {
             <Button className="mt-3" type="button" onClick = {handleSubmit(onSubmit)}>Submit</Button>
           </Form.Group>  
         </Form>
+        { submitting &&
+        <h3 class="text-center">{items + "!"}</h3>
+        }
       </div>
     </div>
   )
@@ -94,10 +103,12 @@ function TambahPenyakit() {
 function TesDNA() {
   const [submitting, setSubmitting] = useState(false);
   const [items, setItems] = useState({});
+
   const {
     register, 
     handleSubmit
   } = useForm();
+
   const onSubmit = (data) => {
     const reader = new FileReader();
     var promise = new Promise(function(resolve) { // use promise to wait for DNA text result
@@ -146,7 +157,7 @@ function TesDNA() {
       { 
         (submitting && typeof(items) == 'object' &&
         <div className="testResult">
-          <p>Berhasil submit</p>
+          <h3>Tes Anda berhasil!</h3>
           <Table hover responsive size="sm">
             <tbody>
               <tr>
@@ -174,6 +185,7 @@ function TesDNA() {
         </div>) || 
         (submitting && typeof(items) != 'object' &&
         <div className="testResult">
+          <h3>Tes Anda gagal!</h3>
           <p>{ items }</p>
         </div>
         )
