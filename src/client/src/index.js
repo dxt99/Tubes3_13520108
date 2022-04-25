@@ -158,7 +158,7 @@ function TesDNA() {
         (submitting && typeof(items) == 'object' &&
         <div className="testResult">
           <h3>Tes Anda berhasil!</h3>
-          <Table hover responsive size="sm">
+          <Table striped hover responsive size="sm">
             <tbody>
               <tr>
                 <td className = "fw-bold">Tanggal</td>
@@ -174,7 +174,7 @@ function TesDNA() {
               </tr>
               <tr> 
                 <td className = "fw-bold">Tingkat Kesamaan</td>
-                <td>{ items.similarity }</td>
+                <td>{ String(items.similarity * 100) + "%" }</td>
               </tr>
               <tr>
                 <td className = "fw-bold">Hasil</td>
@@ -195,6 +195,9 @@ function TesDNA() {
 };
 
 function RiwayatTes() {
+  const [submitting, setSubmitting] = useState(false);
+  const [items, setItems] = useState([]);
+
   const { 
     register,
     handleSubmit,
@@ -203,7 +206,9 @@ function RiwayatTes() {
     console.log(data);
     axios.post("http://localhost:3001/RiwayatTes", data).then(response => {
         console.log(response);
-        console.log(response.data);
+        console.log(response.data.result);
+        setItems(response.data.result);
+        setSubmitting(true);
     })
   }
   return (
@@ -211,14 +216,41 @@ function RiwayatTes() {
       {SideBars("Riwayat Tes Anda", `Melihat semua riwayat tes Anda dalam satu genggaman. 
       Segera konsultasikan kepada ahlinya mengenai riwayat tes Anda!`)}
       <div className = "form">
-          <Form>
-            <Form.Group className="mb-5">
-              <Form.Label>Query:</Form.Label>
-              <Form.Control required type="text" placeholder="Masukkan query pencarian" {...register("query")}></Form.Control>
-              <Button className="mt-3" type="button" onClick = {handleSubmit(onSubmit)}>Submit</Button>
-            </Form.Group>  
-          </Form>
+        <Form>
+          <Form.Group className="mb-5">
+            <Form.Label>Query:</Form.Label>
+            <Form.Control required type="text" placeholder="Masukkan query pencarian" {...register("query")}></Form.Control>
+            <Button className="mt-3" type="button" onClick = {handleSubmit(onSubmit)}>Submit</Button>
+          </Form.Group>  
+        </Form>
+      </div>
+      {
+        submitting &&
+        <div className="testResult">
+          <Table striped hover size="sm">
+            <thead>
+              <tr>
+                <th>No.</th>
+                <th>Nama</th>
+                <th>Penyakit</th>
+                <th>Similarity</th>
+                <th>Hasil</th>
+              </tr>
+            </thead>
+            <tbody>
+              {items.map((item, index) => 
+                <tr key = {index}>
+                  <td>{index + 1}</td>
+                  <td>{item.pengguna}</td>
+                  <td>{item.penyakit}</td>
+                  <td>{String(item.similarity) + "%"}</td>
+                  <td>{(item.similarity >= 80) ? "True" : "False"}</td>
+                </tr>
+              )}
+            </tbody>
+          </Table>
         </div>
+      }
     </div>
   );
 }
