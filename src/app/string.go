@@ -1,11 +1,25 @@
 package main
 
-import "regexp"
+import (
+	"regexp"
+	"strings"
+)
 
 // Checks whether input is a DNA using regex
 func IsDNA(DNA string) bool {
 	regex, _ := regexp.Compile(`[GTCA]+`)
 	return regex.MatchString(DNA)
+}
+
+// Seperates query into date and name
+func querySplit(query string) (string, string) {
+	date, _ := regexp.Compile(`\d{2}-\d{2}-\d{4}`)
+	dateStr := date.FindStringSubmatch(query)
+	nameStr := date.Split(query, -1)
+	if len(nameStr) < 2 {
+		return "", strings.TrimSpace(query)
+	}
+	return dateStr[0], strings.TrimSpace(nameStr[1])
 }
 
 // Checks longest subsequence of pattern in target,

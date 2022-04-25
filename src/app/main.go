@@ -180,11 +180,42 @@ func tesDNA(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// POST METHOD:
+// Query -> string query
+type Query struct {
+	Query string `json:"query"`
+}
+
+func riwayatTes(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	if r.URL.Path != "/TesDNA" {
+		fmt.Fprintf(w, "404 not found")
+		return
+	}
+
+	switch r.Method {
+	case "POST":
+		// Read the content
+
+		var bodyBytes []byte
+		if r.Body != nil {
+			bodyBytes, _ = ioutil.ReadAll(r.Body)
+		}
+		// Use the content
+		var p Query
+		json.Unmarshal(bodyBytes, &p)
+		query := p.Query
+		fmt.Println(query)
+	}
+}
+
 func main() {
 	port := "3001"
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", indexHandler)
 	mux.HandleFunc("/TambahPenyakit", tambahPenyakit)
 	mux.HandleFunc("/TesDNA", tesDNA)
+	mux.HandleFunc("/RiwayatTes", riwayatTes)
 	http.ListenAndServe(":"+port, mux)
 }
