@@ -234,11 +234,18 @@ func riwayatTes(w http.ResponseWriter, r *http.Request) {
 		t, _ := time.Parse("02-01-2006", date)
 		date = t.Format("2006-01-02")
 		name = "%" + name + "%"
-
+		fmt.Println(date)
 		// query
 		db := connect()
-		query = "SELECT * FROM public.hasil NATURAL JOIN public.penyakit WHERE \"Pengguna\" LIKE $2 AND \"Tanggal\" = $1"
-		rows, err := db.Query(query, date, name)
+		var rows *sql.Rows
+		var err error
+		if date == "0001-01-01" {
+			query = "SELECT * FROM public.hasil NATURAL JOIN public.penyakit WHERE \"NamaPenyakit\" LIKE $1"
+			rows, err = db.Query(query, name)
+		} else {
+			query = "SELECT * FROM public.hasil NATURAL JOIN public.penyakit WHERE \"NamaPenyakit\" LIKE $2 AND \"Tanggal\" = $1"
+			rows, err = db.Query(query, date, name)
+		}
 		defer rows.Close()
 		defer db.Close()
 		var result ResultArray
