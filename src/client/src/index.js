@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { BrowserRouter, Link, Routes, Route } from 'react-router-dom';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Table } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import HomeIcon from '@mui/icons-material/Home';
 import CoronavirusIcon from '@mui/icons-material/Coronavirus';
@@ -54,6 +54,7 @@ function TambahPenyakit() {
     register, 
     handleSubmit,
   } = useForm();
+
   const onSubmit = (data) => {
     const reader = new FileReader();
     var promise = new Promise(function(resolve) { // use promise to wait for DNA text result
@@ -71,6 +72,7 @@ function TambahPenyakit() {
       });
     });
   }
+
   return(
     <div>
       {SideBars("Tambahkan DNA Penyakit", `Tambahkan DNA penyakit agar jangkauan tes semakin luas!`)}
@@ -90,9 +92,11 @@ function TambahPenyakit() {
 };
 
 function TesDNA() {
+  const [submitting, setSubmitting] = useState(false);
+  const [items, setItems] = useState({});
   const {
     register, 
-    handleSubmit,
+    handleSubmit
   } = useForm();
   const onSubmit = (data) => {
     const reader = new FileReader();
@@ -108,35 +112,74 @@ function TesDNA() {
       axios.post("http://localhost:3001/TesDNA", data).then(response => {
         console.log(response);
         console.log(response.data);
+        console.log(typeof(response.data));
+        setItems(response.data);
+        setSubmitting(true);
       });
     });
   }
+
   return (
     <div>
-        {SideBars("Tes DNA Anda Sekarang!", `Ketika seseorang memiliki kelainan genetik atau DNA,
-          misalnya karena penyakit keturunan atau karena faktor lainnya, ia bisa mengalami penyakit
-          tertentu. Oleh karena itu, tes DNA penting untuk dilakukan untuk mengetahui struktur genetik di
-          dalam tubuh seseorang serta mendeteksi kelainan genetik.`)} 
-        <div className = "form">
-          <Form>
-            <Form.Group className="mb-5">
-              <Form.Label>Nama Pengguna:</Form.Label>
-              <Form.Control required type="text" placeholder="Masukkan nama pengguna" {...register("namaPengguna")}></Form.Control>
-              <Form.Label className="mt-3">Prediksi Penyakit:</Form.Label>
-              <Form.Control type="text" placeholder="Masukkan prediksi penyakit" {...register("prediksiPenyakit")}></Form.Control>
-              <Form.Label className="mt-3">Pilih algoritma string matching:</Form.Label>
-              <Form.Select {...register("algoritma")}>
-                <option value="KMP">KMP</option>
-                <option value="Boyer-Moore">Boyer-Moore</option>
-              </Form.Select>
-              <Form.Label className="mt-3">Unggah file teks rantai DNA:</Form.Label>
-              <Form.Control type="file" {...register("DNA")}></Form.Control>
-              <Button className="mt-3" type="button" onClick = {handleSubmit(onSubmit)}>Submit</Button>
-            </Form.Group>  
-          </Form>
-        </div>
+      {SideBars("Tes DNA Anda Sekarang!", `Ketika seseorang memiliki kelainan genetik atau DNA,
+        misalnya karena penyakit keturunan atau karena faktor lainnya, ia bisa mengalami penyakit
+        tertentu. Oleh karena itu, tes DNA penting untuk dilakukan untuk mengetahui struktur genetik di
+        dalam tubuh seseorang serta mendeteksi kelainan genetik.`)} 
+      <div className = "form">
+        <Form>
+          <Form.Group className="mb-5">
+            <Form.Label>Nama Pengguna:</Form.Label>
+            <Form.Control required type="text" placeholder="Masukkan nama pengguna" {...register("namaPengguna")}></Form.Control>
+            <Form.Label className="mt-3">Prediksi Penyakit:</Form.Label>
+            <Form.Control type="text" placeholder="Masukkan prediksi penyakit" {...register("prediksiPenyakit")}></Form.Control>
+            <Form.Label className="mt-3">Pilih algoritma string matching:</Form.Label>
+            <Form.Select {...register("algoritma")}>
+              <option value="KMP">KMP</option>
+              <option value="Boyer-Moore">Boyer-Moore</option>
+            </Form.Select>
+            <Form.Label className="mt-3">Unggah file teks rantai DNA:</Form.Label>
+            <Form.Control type="file" {...register("DNA")}></Form.Control>
+            <Button className="mt-3" type="submit" onClick = {handleSubmit(onSubmit)}>Submit</Button>
+          </Form.Group>  
+        </Form>
       </div>
-    )
+      { 
+        (submitting && typeof(items) == 'object' &&
+        <div className="testResult">
+          <p>Berhasil submit</p>
+          <Table hover responsive size="sm">
+            <tbody>
+              <tr>
+                <td className = "fw-bold">Tanggal</td>
+                <td>{ items.tanggal }</td>
+              </tr>
+              <tr>
+                <td className = "fw-bold">Pengguna</td>
+                <td>{ items.pengguna }</td>
+              </tr>
+              <tr>
+                <td className = "fw-bold">Penyakit</td>
+                <td>{ items.penyakit }</td>
+              </tr>
+              <tr> 
+                <td className = "fw-bold">Tingkat Kesamaan</td>
+                <td>{ items.similarity }</td>
+              </tr>
+              <tr>
+                <td className = "fw-bold">Hasil</td>
+                <td>{ items.isSakit ? "True" : "False" }</td>
+              </tr>
+            </tbody>
+          </Table>
+        </div>) || 
+        (submitting && typeof(items) != 'object' &&
+        <div className="testResult">
+          <p>{ items }</p>
+        </div>
+        )
+      }
+    </div>
+  )
 };
 
 function RiwayatTes() {
