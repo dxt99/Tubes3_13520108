@@ -55,7 +55,7 @@ type Insert struct {
 func tambahPenyakit(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-	if r.URL.Path != "/TesDNA" {
+	if r.URL.Path != "/TambahPenyakit" {
 		fmt.Fprintf(w, "404 not found")
 		return
 	}
@@ -206,10 +206,14 @@ type Query struct {
 	Query string `json:"query"`
 }
 
+type ResultArray struct {
+	Result []Result `json:"result"`
+}
+
 func riwayatTes(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-	if r.URL.Path != "/TesDNA" {
+	if r.URL.Path != "/RiwayatTes" {
 		fmt.Fprintf(w, "404 not found")
 		return
 	}
@@ -229,7 +233,38 @@ func riwayatTes(w http.ResponseWriter, r *http.Request) {
 		date, name := querySplit(query)
 		t, _ := time.Parse("02-01-2006", date)
 		date = t.Format("2006-01-02")
-		fmt.Println(date, name)
+		name = "%" + name + "%"
+
+		// query
+		db := connect()
+		query = "SELECT * FROM public.hasil NATURAL JOIN public.penyakit WHERE \"Pengguna\" LIKE $2 AND \"Tanggal\" = $1"
+		rows, err := db.Query(query, date, name)
+		defer rows.Close()
+		defer db.Close()
+		var result ResultArray
+		if err != nil {
+			return
+		}
+		for rows.Next() {
+			var temp Result
+			var IDPenyakit int
+			var IDHasil int
+			var DNA string
+			var tempSimilarity float64
+			rows.Scan(&IDPenyakit, &IDHasil, &(temp.Tanggal), &(temp.Pengguna), &(tempSimilarity), &(temp.Penyakit), &(DNA))
+			temp.Similarity = int(tempSimilarity * 100)
+			temp.IsSakit = false
+			if temp.Similarity >= 80 {
+				temp.IsSakit = true
+			}
+			t, _ := time.Parse("2006-01-02T15:04:05Z", temp.Tanggal)
+			temp.Tanggal = t.Format("2006-01-02")
+			result.Result = append(result.Result, temp)
+		}
+
+		encJson, _ := json.Marshal(result)
+		fmt.Fprint(w, string(encJson))
+		return
 	}
 }
 
