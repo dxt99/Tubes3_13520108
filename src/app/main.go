@@ -110,6 +110,14 @@ type Form struct {
 	DNA              string `json:"DNA"`
 }
 
+type Result struct {
+	Tanggal    string `json: "tanggal"`
+	Pengguna   string `json: "pengguna"`
+	Penyakit   string `json: "penyakit"`
+	Similarity int    `json: "similarity"`
+	IsSakit    bool   `json: "isSakit"`
+}
+
 func tesDNA(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
@@ -175,7 +183,15 @@ func tesDNA(w http.ResponseWriter, r *http.Request) {
 			fmt.Fprintf(w, "Unknown Error")
 			return
 		}
-		fmt.Fprintf(w, "Tes Sukses")
+
+		// Send result
+		var result Result
+		result.Tanggal = time.Now().Format("2006-01-02")
+		result.Pengguna = pengguna
+		result.Penyakit = nama
+		result.Similarity = int(similarity * 100)
+		encJson, _ := json.Marshal(result)
+		fmt.Fprint(w, string(encJson))
 		return
 	}
 }
@@ -206,7 +222,10 @@ func riwayatTes(w http.ResponseWriter, r *http.Request) {
 		var p Query
 		json.Unmarshal(bodyBytes, &p)
 		query := p.Query
-		fmt.Println(query)
+		date, name := querySplit(query)
+		t, _ := time.Parse("02-01-2006", date)
+		date = t.Format("2006-01-02")
+		fmt.Println(date, name)
 	}
 }
 

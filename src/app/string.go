@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"regexp"
 	"strings"
 )
@@ -15,6 +16,7 @@ func IsDNA(DNA string) bool {
 func querySplit(query string) (string, string) {
 	date, _ := regexp.Compile(`\d{2}-\d{2}-\d{4}`)
 	dateStr := date.FindStringSubmatch(query)
+	fmt.Println(dateStr)
 	nameStr := date.Split(query, -1)
 	if len(nameStr) < 2 {
 		return "", strings.TrimSpace(query)
