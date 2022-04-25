@@ -190,6 +190,10 @@ func tesDNA(w http.ResponseWriter, r *http.Request) {
 		result.Pengguna = pengguna
 		result.Penyakit = nama
 		result.Similarity = int(similarity * 100)
+		result.IsSakit = false
+		if result.Similarity >= 80 {
+			result.IsSakit = true
+		}
 		encJson, _ := json.Marshal(result)
 		fmt.Fprint(w, string(encJson))
 		return
