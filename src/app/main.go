@@ -162,12 +162,19 @@ func tesDNA(w http.ResponseWriter, r *http.Request) {
 			fmt.Fprintf(w, "Penyakit belum ditambahkan")
 			return
 		}
+		flag := false
 		var pattern string
 		var IDPenyakit int
 		for rows.Next() {
 			rows.Scan(&pattern, &IDPenyakit)
+			flag = true
 		}
 
+		if !flag {
+			fmt.Fprintf(w, "Penyakit belum ditambahkan")
+			return
+		}
+		fmt.Println(IDPenyakit)
 		// Check method
 		var similarity float64 = 0
 		isSame := BoyerMoore(DNA, pattern)
