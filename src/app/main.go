@@ -111,11 +111,11 @@ type Form struct {
 }
 
 type Result struct {
-	Tanggal    string `json: "tanggal"`
-	Pengguna   string `json: "pengguna"`
-	Penyakit   string `json: "penyakit"`
-	Similarity int    `json: "similarity"`
-	IsSakit    bool   `json: "isSakit"`
+	Tanggal    string `json:"tanggal"`
+	Pengguna   string `json:"pengguna"`
+	Penyakit   string `json:"penyakit"`
+	Similarity int    `json:"similarity"`
+	IsSakit    bool   `json:"isSakit"`
 }
 
 func tesDNA(w http.ResponseWriter, r *http.Request) {
