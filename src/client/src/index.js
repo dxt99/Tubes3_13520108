@@ -139,15 +139,33 @@ function TesDNA() {
     )
 };
 
-class RiwayatTes extends React.Component{
-  render(){
-    return(
-      <div>
-        {SideBars("Riwayat Tes Anda", `Melihat semua riwayat tes Anda dalam satu genggaman. 
-        Segera konsultasikan kepada ahlinya mengenai riwayat tes Anda!`)}
-      </div>
-    );
+function RiwayatTes() {
+  const { 
+    register,
+    handleSubmit,
+  } = useForm();
+  const onSubmit = (data) => {
+    console.log(data);
+    axios.post("http://localhost:3001/RiwayatTes", data).then(response => {
+        console.log(response);
+        console.log(response.data);
+    })
   }
+  return (
+    <div>
+      {SideBars("Riwayat Tes Anda", `Melihat semua riwayat tes Anda dalam satu genggaman. 
+      Segera konsultasikan kepada ahlinya mengenai riwayat tes Anda!`)}
+      <div className = "form">
+          <Form>
+            <Form.Group className="mb-5">
+              <Form.Label>Query:</Form.Label>
+              <Form.Control required type="text" placeholder="Masukkan query pencarian" {...register("query")}></Form.Control>
+              <Button className="mt-3" type="button" onClick = {handleSubmit(onSubmit)}>Submit</Button>
+            </Form.Group>  
+          </Form>
+        </div>
+    </div>
+  );
 }
 
 ReactDOM.render (
