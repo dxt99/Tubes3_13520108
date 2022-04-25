@@ -6,7 +6,7 @@
 body {
   margin: 0px;
   position: relative;
-  width: 95vw;
+  width: 100vw;
   height: 95vh;
   font-family: 'Roboto';
   font-style: normal;
@@ -150,6 +150,10 @@ body {
   flex: 30%;
   display:grid;
   place-items: center;
+}
+
+.testResult {
+  margin-left: 400px;
 }
 
 
