@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { BrowserRouter, Link, Routes, Route } from 'react-router-dom';
-import { Button, Form, Table } from 'react-bootstrap';
+import { Button, Form, Table, Alert } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import HomeIcon from '@mui/icons-material/Home';
 import CoronavirusIcon from '@mui/icons-material/Coronavirus';
@@ -100,7 +100,9 @@ function TambahPenyakit() {
           </Form.Group>  
         </Form>
         { submitting &&
-        <h3 class="text-center">{items + "!"}</h3>
+          <Alert variant= {items === "Penyakit berhasil ditambahkan" ? "success" : "danger"}>
+            { items }
+          </Alert>
         }
       </div>
     </div>
@@ -148,7 +150,7 @@ function TesDNA() {
         dalam tubuh seseorang serta mendeteksi kelainan genetik.`)} 
       <div className = "form">
         <Form>
-          <Form.Group className="pb-5 mb-5">
+          <Form.Group className="pb-5">
             <Form.Label>Nama Pengguna:</Form.Label>
             <Form.Control required type="text" placeholder="Masukkan nama pengguna" {...register("namaPengguna")}></Form.Control>
             <Form.Label className="mt-3">Prediksi Penyakit:</Form.Label>
@@ -171,8 +173,14 @@ function TesDNA() {
       </div>
       { 
         (submitting && typeof(items) == 'object' &&
-        <div className="testResult pb-5">
-          <h3>Tes Anda berhasil!</h3>
+        <div className="testResult">
+          <Alert className="mb-5" variant="success">
+            <Alert.Heading>Tes Anda berhasil!</Alert.Heading>
+            <p>
+              Terima kasih telah melakukan tes di Malignant. Segera konsultasikan hasil tes
+              Anda kepada ahlinya!
+            </p>
+          </Alert>
           <Table striped hover responsive size="sm">
             <tbody>
               <tr>
@@ -198,10 +206,14 @@ function TesDNA() {
             </tbody>
           </Table>
         </div>) || 
-        (submitting && typeof(items) != 'object' &&
-        <div className="testResult">
-          <h3>Tes Anda gagal!</h3>
-          <p>{ items }</p>
+        (submitting && typeof(items) == 'string' &&
+        <div className="testResult pb-5">
+          <Alert variant="danger">
+            <Alert.Heading>Mohon maaf, tes Anda gagal!</Alert.Heading>
+            <p>
+              { items }
+            </p>
+          </Alert>
         </div>
         )
       }
@@ -248,7 +260,7 @@ function RiwayatTes() {
         </Form>
       </div>
       {
-        submitting &&
+        (submitting && items != null &&
         <div className="testResult">
           <Table striped hover size="sm">
             <thead>
@@ -272,7 +284,13 @@ function RiwayatTes() {
               )}
             </tbody>
           </Table>
-        </div>
+        </div>) ||
+        (submitting && items == null &&
+        <div className="testResult">
+          <Alert variant="danger">
+            <p className="mb-0">Mohon maaf, riwayat tidak ditemukan!</p>
+          </Alert>
+        </div>)
       }
     </div>
   );
