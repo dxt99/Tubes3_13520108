@@ -51,6 +51,7 @@ function Home(){
 
 function TambahPenyakit() {
   const [submitting, setSubmitting] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const [items, setItems] = useState("");
 
   const {
@@ -59,7 +60,7 @@ function TambahPenyakit() {
   } = useForm();
 
   const onSubmit = (data) => {
-    
+    setLoading(true);
     const reader = new FileReader();
     var promise = new Promise(function(resolve) { // use promise to wait for DNA text result
       reader.onload = function() {
@@ -74,7 +75,8 @@ function TambahPenyakit() {
         console.log(response);
         console.log(response.data);
         setItems(response.data);
-        setSubmitting(true);      
+        setSubmitting(true);
+        setLoading(false);      
       });
     });
   }
@@ -89,7 +91,12 @@ function TambahPenyakit() {
             <Form.Control required type="text" placeholder="Masukkan nama penyakit" {...register("namaPenyakit")}></Form.Control>
             <Form.Label className="mt-3">Unggah file teks rantai DNA:</Form.Label>
             <Form.Control type="file" {...register("DNA")}></Form.Control>
-            <Button className="mt-3" type="button" onClick = {handleSubmit(onSubmit)}>Submit</Button>
+            <Button className="mt-3" 
+                    type="submit" 
+                    onClick = {handleSubmit(onSubmit)}
+                    disabled = {isLoading}>
+              {!isLoading ? "Submit" : "Loading..."}
+            </Button>
           </Form.Group>  
         </Form>
         { submitting &&
@@ -102,6 +109,7 @@ function TambahPenyakit() {
 
 function TesDNA() {
   const [submitting, setSubmitting] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const [items, setItems] = useState({});
 
   const {
@@ -110,6 +118,7 @@ function TesDNA() {
   } = useForm();
 
   const onSubmit = (data) => {
+    setLoading(true);
     const reader = new FileReader();
     var promise = new Promise(function(resolve) { // use promise to wait for DNA text result
       reader.onload = function() {
@@ -126,6 +135,7 @@ function TesDNA() {
         console.log(typeof(response.data));
         setItems(response.data);
         setSubmitting(true);
+        setLoading(false);
       });
     });
   }
@@ -138,7 +148,7 @@ function TesDNA() {
         dalam tubuh seseorang serta mendeteksi kelainan genetik.`)} 
       <div className = "form">
         <Form>
-          <Form.Group className="mb-5">
+          <Form.Group className="pb-5 mb-5">
             <Form.Label>Nama Pengguna:</Form.Label>
             <Form.Control required type="text" placeholder="Masukkan nama pengguna" {...register("namaPengguna")}></Form.Control>
             <Form.Label className="mt-3">Prediksi Penyakit:</Form.Label>
@@ -150,13 +160,18 @@ function TesDNA() {
             </Form.Select>
             <Form.Label className="mt-3">Unggah file teks rantai DNA:</Form.Label>
             <Form.Control type="file" {...register("DNA")}></Form.Control>
-            <Button className="mt-3" type="submit" onClick = {handleSubmit(onSubmit)}>Submit</Button>
+            <Button className="mt-3" 
+                    type="submit" 
+                    onClick = {handleSubmit(onSubmit)}
+                    disabled = {isLoading}>
+              {!isLoading ? "Submit" : "Loading..."}
+            </Button>
           </Form.Group>  
         </Form>
       </div>
       { 
         (submitting && typeof(items) == 'object' &&
-        <div className="testResult">
+        <div className="testResult pb-5">
           <h3>Tes Anda berhasil!</h3>
           <Table striped hover responsive size="sm">
             <tbody>
@@ -174,7 +189,7 @@ function TesDNA() {
               </tr>
               <tr> 
                 <td className = "fw-bold">Tingkat Kesamaan</td>
-                <td>{ String(items.similarity * 100) + "%" }</td>
+                <td>{ String(items.similarity) + "%" }</td>
               </tr>
               <tr>
                 <td className = "fw-bold">Hasil</td>
@@ -197,18 +212,21 @@ function TesDNA() {
 function RiwayatTes() {
   const [submitting, setSubmitting] = useState(false);
   const [items, setItems] = useState([]);
+  const [isLoading, setLoading] = useState(false);
 
   const { 
     register,
     handleSubmit,
   } = useForm();
   const onSubmit = (data) => {
+    setLoading(true);
     console.log(data);
     axios.post("http://localhost:3001/RiwayatTes", data).then(response => {
         console.log(response);
         console.log(response.data.result);
         setItems(response.data.result);
         setSubmitting(true);
+        setLoading(false);
     })
   }
   return (
@@ -220,7 +238,12 @@ function RiwayatTes() {
           <Form.Group className="mb-5">
             <Form.Label>Query:</Form.Label>
             <Form.Control required type="text" placeholder="Masukkan query pencarian" {...register("query")}></Form.Control>
-            <Button className="mt-3" type="button" onClick = {handleSubmit(onSubmit)}>Submit</Button>
+            <Button className="mt-3" 
+                    type="submit" 
+                    onClick = {handleSubmit(onSubmit)}
+                    disabled = {isLoading}>
+              {!isLoading ? "Submit" : "Loading..."}
+            </Button>
           </Form.Group>  
         </Form>
       </div>
