@@ -94,7 +94,8 @@ function TambahPenyakit() {
             <Button className="mt-3" 
                     type="submit" 
                     onClick = {handleSubmit(onSubmit)}
-                    disabled = {isLoading}>
+                    disabled = {isLoading}
+                    variant = "success">
               {!isLoading ? "Submit" : "Loading..."}
             </Button>
           </Form.Group>  
@@ -165,7 +166,8 @@ function TesDNA() {
             <Button className="mt-3" 
                     type="submit" 
                     onClick = {handleSubmit(onSubmit)}
-                    disabled = {isLoading}>
+                    disabled = {isLoading}
+                    variant = "success">
               {!isLoading ? "Submit" : "Loading..."}
             </Button>
           </Form.Group>  
@@ -253,7 +255,8 @@ function RiwayatTes() {
             <Button className="mt-3" 
                     type="submit" 
                     onClick = {handleSubmit(onSubmit)}
-                    disabled = {isLoading}>
+                    disabled = {isLoading}
+                    variant = "success">
               {!isLoading ? "Submit" : "Loading..."}
             </Button>
           </Form.Group>  
