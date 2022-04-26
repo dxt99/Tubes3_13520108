@@ -175,7 +175,6 @@ func tesDNA(w http.ResponseWriter, r *http.Request) {
 			fmt.Fprintf(w, "Penyakit belum ditambahkan")
 			return
 		}
-		fmt.Println(IDPenyakit)
 		// Check method
 		var similarity float64 = 0
 		isSame := false
@@ -251,7 +250,6 @@ func riwayatTes(w http.ResponseWriter, r *http.Request) {
 		t, _ := time.Parse("02-01-2006", date)
 		date = t.Format("2006-01-02")
 		name = "%" + name + "%"
-		fmt.Println(date)
 		// query
 		db := connect()
 		var rows *sql.Rows
