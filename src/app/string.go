@@ -98,14 +98,11 @@ func BoyerMoore(target string, pattern string) bool {
 
 // Uses Knuth–Morris–Pratt algorithm
 func KMP(target string, pattern string) bool {
-
-	found := false
-
 	n := len(target)
 	m := len(pattern)
 
 	// Make an array of longest prefix-suffix for each pattern index
-	lps := make([]int, m)
+	lps := make([]int, m+1)
 	i := 0
 	j := -1
 	lps[0] = -1
@@ -128,9 +125,9 @@ func KMP(target string, pattern string) bool {
 		i++
 		j++
 		if j == m {
-			found = true
+			return true
 		}
 	}
 
-	return found
+	return false
 }

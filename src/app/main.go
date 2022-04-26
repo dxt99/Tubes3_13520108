@@ -140,6 +140,7 @@ func tesDNA(w http.ResponseWriter, r *http.Request) {
 		pengguna := p.NamaPengguna
 		nama := p.PrediksiPenyakit
 		DNA := p.DNA
+		Algoritma := p.Algoritma
 
 		if len(nama) == 0 {
 			fmt.Fprintf(w, "Nama kosong")
@@ -177,7 +178,16 @@ func tesDNA(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(IDPenyakit)
 		// Check method
 		var similarity float64 = 0
-		isSame := BoyerMoore(DNA, pattern)
+		isSame := false
+		if Algoritma == "KMP" {
+			isSame = KMP(DNA, pattern)
+		} else if Algoritma == "Boyer-Moore" {
+			isSame = BoyerMoore(DNA, pattern)
+		} else {
+			fmt.Fprintf(w, "Metode tidak dikenali")
+			return
+		}
+
 		if !isSame {
 			similarity = LCS(DNA, pattern)
 		} else {
