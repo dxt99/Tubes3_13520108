@@ -270,7 +270,7 @@ function RiwayatTes() {
             <Form.Control required type="text" placeholder="Masukkan query pencarian" {...register("query")}></Form.Control>
             <Form.Text className="text-muted">
                 Contoh: "18-04-2022 HIV", "18-04-2022", "HIV"
-              </Form.Text>
+            </Form.Text>
           </Form.Group> 
           <Button className="mt-3" 
                     type="submit" 
@@ -291,7 +291,7 @@ function RiwayatTes() {
       </div>
       {
         (submitting && items != null &&
-        <div className="testResult">
+        <div className="testResult mt-5">
           <Table striped hover size="sm">
             <thead>
               <tr>
@@ -316,7 +316,7 @@ function RiwayatTes() {
           </Table>
         </div>) ||
         (submitting && items == null &&
-        <div className="testResult">
+        <div className="testResult mt-5">
           <Alert variant="danger">
             <p className="mb-0">Mohon maaf, riwayat tidak ditemukan!</p>
           </Alert>
