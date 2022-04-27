@@ -84,12 +84,15 @@ function TambahPenyakit() {
   return(
     <div>
       {SideBars("Tambahkan DNA Penyakit", `Tambahkan DNA penyakit agar jangkauan tes semakin luas!`)}
-      <div className = "form">
+      <div className="spacer" style={{ 
+        backgroundImage: `url(${process.env.PUBLIC_URL + '/layer1.svg'})` 
+      }}></div>
+      <div className = "form pb-5">
         <Form>
-          <Form.Group className="mb-5">
-            <Form.Label>Nama Penyakit:</Form.Label>
+          <Form.Group className="pb-5">
+            <Form.Label className="text-white fw-bold">Nama Penyakit:</Form.Label>
             <Form.Control required type="text" placeholder="Masukkan nama penyakit" {...register("namaPenyakit")}></Form.Control>
-            <Form.Label className="mt-3">Unggah file teks rantai DNA:</Form.Label>
+            <Form.Label className="mt-3 text-white fw-bold">Unggah file teks rantai DNA:</Form.Label>
             <Form.Control type="file" {...register("DNA")}></Form.Control>
             <Button className="mt-3" 
                     type="submit" 
@@ -109,11 +112,14 @@ function TambahPenyakit() {
           </Form.Group>  
         </Form>
         { submitting &&
-          <Alert variant= {items === "Penyakit berhasil ditambahkan" ? "success" : "danger"}>
+          <Alert className="mb-0" variant= {items === "Penyakit berhasil ditambahkan" ? "success" : "danger"}>
             { items }
           </Alert>
         }
       </div>
+      <div className="spacer" style={{ 
+        backgroundImage: `url(${process.env.PUBLIC_URL + '/layer3.svg'})` 
+      }}></div>  
     </div>
   )
 };
@@ -152,24 +158,27 @@ function TesDNA() {
   }
 
   return (
-    <div>
+    <div >
       {SideBars("Tes DNA Anda Sekarang!", `Ketika seseorang memiliki kelainan genetik atau DNA,
         misalnya karena penyakit keturunan atau karena faktor lainnya, ia bisa mengalami penyakit
         tertentu. Oleh karena itu, tes DNA penting untuk dilakukan untuk mengetahui struktur genetik di
         dalam tubuh seseorang serta mendeteksi kelainan genetik.`)} 
-      <div className = "form">
+      <div className="spacer" style={{ 
+        backgroundImage: `url(${process.env.PUBLIC_URL + '/layer1.svg'})` 
+      }}></div>
+      <div className="form">
         <Form>
           <Form.Group className="pb-5">
-            <Form.Label>Nama Pengguna:</Form.Label>
+            <Form.Label className="text-white fw-bold">Nama Pengguna:</Form.Label>
             <Form.Control required type="text" placeholder="Masukkan nama pengguna" {...register("namaPengguna")}></Form.Control>
-            <Form.Label className="mt-3">Prediksi Penyakit:</Form.Label>
+            <Form.Label className="mt-3 text-white fw-bold">Prediksi Penyakit:</Form.Label>
             <Form.Control type="text" placeholder="Masukkan prediksi penyakit" {...register("prediksiPenyakit")}></Form.Control>
-            <Form.Label className="mt-3">Pilih algoritma string matching:</Form.Label>
+            <Form.Label className="mt-3 text-white fw-bold">Pilih algoritma string matching:</Form.Label>
             <Form.Select {...register("algoritma")}>
               <option value="KMP">KMP</option>
               <option value="Boyer-Moore">Boyer-Moore</option>
             </Form.Select>
-            <Form.Label className="mt-3">Unggah file teks rantai DNA:</Form.Label>
+            <Form.Label className="mt-3 text-white fw-bold">Unggah file teks rantai DNA:</Form.Label>
             <Form.Control type="file" {...register("DNA")}></Form.Control>
             <Button className="mt-3" 
                     type="submit" 
@@ -199,8 +208,8 @@ function TesDNA() {
               Anda kepada ahlinya!
             </p>
           </Alert>
-          <Table striped hover responsive size="sm">
-            <tbody>
+          <Table responsive size="sm">
+            <tbody className="text-white">
               <tr>
                 <td className = "fw-bold">Tanggal</td>
                 <td>{ items.tanggal }</td>
@@ -234,7 +243,10 @@ function TesDNA() {
           </Alert>
         </div>
         )
-      }
+      } 
+      <div className="spacer" style={{ 
+        backgroundImage: `url(${process.env.PUBLIC_URL + '/layer3.svg'})` 
+      }}></div>  
     </div>
   )
 };
@@ -263,12 +275,15 @@ function RiwayatTes() {
     <div>
       {SideBars("Riwayat Tes Anda", `Melihat semua riwayat tes Anda dalam satu genggaman. 
       Segera konsultasikan kepada ahlinya mengenai riwayat tes Anda!`)}
-      <div className = "form">
+      <div className="spacer" style={{ 
+        backgroundImage: `url(${process.env.PUBLIC_URL + '/layer1.svg'})` 
+      }}></div>
+      <div className = "form pb-5">
         <Form>
           <Form.Group>
-            <Form.Label>Query:</Form.Label>
+            <Form.Label className="text-white fw-bold">Query:</Form.Label>
             <Form.Control required type="text" placeholder="Masukkan query pencarian" {...register("query")}></Form.Control>
-            <Form.Text className="text-muted">
+            <Form.Text className="text-white">
                 Contoh: "18-04-2022 HIV", "18-04-2022", "HIV"
             </Form.Text>
           </Form.Group> 
@@ -291,8 +306,8 @@ function RiwayatTes() {
       </div>
       {
         (submitting && items != null &&
-        <div className="testResult mt-5">
-          <Table striped hover size="sm">
+        <div className="testResult pb-5">
+          <Table className="mb-0 pb-5 text-white" size="sm">
             <thead>
               <tr>
                 <th>No.</th>
@@ -316,12 +331,15 @@ function RiwayatTes() {
           </Table>
         </div>) ||
         (submitting && items == null &&
-        <div className="testResult mt-5">
-          <Alert variant="danger">
+        <div className="testResult pb-5">
+          <Alert className="mb-0" variant="danger">
             <p className="mb-0">Mohon maaf, riwayat tidak ditemukan!</p>
           </Alert>
         </div>)
       }
+      <div className="spacer" style={{ 
+        backgroundImage: `url(${process.env.PUBLIC_URL + '/layer3.svg'})` 
+      }}></div>  
     </div>
   );
 }

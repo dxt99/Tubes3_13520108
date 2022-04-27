@@ -30,7 +30,7 @@ body {
   left: 0px;
   top: 0px;
   bottom: 0px;
-  background: #1D5C63;
+  background: #044a3c;
 
   color: #000000;
 }
@@ -61,7 +61,8 @@ body {
 }
 
 .form {
-  margin: 50px 200px 0px 400px;
+  padding: 50px 200px 0px 400px;
+  background-color: #0d6553;
 }
 
 .helloWorld{
@@ -108,7 +109,7 @@ body {
   font-size: 32px;
   line-height: 36px;
 
-  background: #1D5C63;
+  background: #044a3c;
   color: white
 }
 
@@ -139,7 +140,7 @@ body {
 
 .sidebarList:hover {
   cursor: pointer;
-  background-color: #1A3C40;
+  background-color: #024537;
 }
 
 .sidebarMenu {
@@ -152,9 +153,19 @@ body {
   place-items: center;
 }
 
+.spacer {
+  aspect-ratio: 960/100;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
 .testResult {
-  margin-left: 400px;
-  margin-right: 100px;
+  padding-left: 400px;
+  padding-right: 100px;
+  background-color: #0d6553;
+  color:white;
 }
 
 
@@ -169,7 +180,7 @@ body {
   padding: 70px 100px 100px 300px;
   
   color: white;
-  background: #069A8E;
+  background: #001122;
 }
 
 .titleHeading {
