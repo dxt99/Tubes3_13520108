@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { BrowserRouter, Link, Routes, Route } from 'react-router-dom';
-import { Button, Form, Table, Alert } from 'react-bootstrap';
+import { Button, Form, Table, Alert, Spinner } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import HomeIcon from '@mui/icons-material/Home';
 import CoronavirusIcon from '@mui/icons-material/Coronavirus';
@@ -96,7 +96,15 @@ function TambahPenyakit() {
                     onClick = {handleSubmit(onSubmit)}
                     disabled = {isLoading}
                     variant = "success">
-              {!isLoading ? "Submit" : "Loading..."}
+              {(isLoading &&
+              <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />)
+              || (!isLoading && "Submit")}
             </Button>
           </Form.Group>  
         </Form>
@@ -168,7 +176,15 @@ function TesDNA() {
                     onClick = {handleSubmit(onSubmit)}
                     disabled = {isLoading}
                     variant = "success">
-              {!isLoading ? "Submit" : "Loading..."}
+              {(isLoading &&
+              <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />)
+              || (!isLoading && "Submit")}
             </Button>
           </Form.Group>  
         </Form>
@@ -257,7 +273,15 @@ function RiwayatTes() {
                     onClick = {handleSubmit(onSubmit)}
                     disabled = {isLoading}
                     variant = "success">
-              {!isLoading ? "Submit" : "Loading..."}
+              {(isLoading &&
+              <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />)
+              || (!isLoading && "Submit")}
             </Button>
           </Form.Group>  
         </Form>
