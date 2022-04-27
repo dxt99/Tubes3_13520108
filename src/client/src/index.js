@@ -265,10 +265,14 @@ function RiwayatTes() {
       Segera konsultasikan kepada ahlinya mengenai riwayat tes Anda!`)}
       <div className = "form">
         <Form>
-          <Form.Group className="mb-5">
+          <Form.Group>
             <Form.Label>Query:</Form.Label>
             <Form.Control required type="text" placeholder="Masukkan query pencarian" {...register("query")}></Form.Control>
-            <Button className="mt-3" 
+            <Form.Text className="text-muted">
+                Contoh: "18-04-2022 HIV", "18-04-2022", "HIV"
+              </Form.Text>
+          </Form.Group> 
+          <Button className="mt-3" 
                     type="submit" 
                     onClick = {handleSubmit(onSubmit)}
                     disabled = {isLoading}
@@ -282,8 +286,7 @@ function RiwayatTes() {
                   aria-hidden="true"
                 />)
               || (!isLoading && "Submit")}
-            </Button>
-          </Form.Group>  
+            </Button> 
         </Form>
       </div>
       {
