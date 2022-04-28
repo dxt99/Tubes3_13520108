@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"time"
 
 	_ "github.com/lib/pq"
@@ -291,7 +292,7 @@ func riwayatTes(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	port := "3001"
+	port := os.Getenv("PORT")
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", indexHandler)
 	mux.HandleFunc("/TambahPenyakit", tambahPenyakit)
