@@ -87,7 +87,7 @@ function TambahPenyakit() {
       <div className="spacer" style={{ 
         backgroundImage: `url(${process.env.PUBLIC_URL + '/layer1.svg'})` 
       }}></div>
-      <div className = "form pb-5">
+      <div className = "form">
         <Form>
           <Form.Group className="pb-5">
             <Form.Label className="text-white fw-bold">Nama Penyakit:</Form.Label>
@@ -117,7 +117,7 @@ function TambahPenyakit() {
           </Alert>
         }
       </div>
-      <div className="spacer" style={{ 
+      <div className="bottomSpacer" style={{ 
         backgroundImage: `url(${process.env.PUBLIC_URL + '/layer3.svg'})` 
       }}></div>  
     </div>
@@ -234,7 +234,7 @@ function TesDNA() {
           </Table>
         </div>) || 
         (submitting && typeof(items) == 'string' &&
-        <div className="testResult pb-5">
+        <div className="testResult pb-1">
           <Alert variant="danger">
             <Alert.Heading>Mohon maaf, tes Anda gagal!</Alert.Heading>
             <p>
@@ -244,7 +244,7 @@ function TesDNA() {
         </div>
         )
       } 
-      <div className="spacer" style={{ 
+      <div className="bottomSpacer" style={{ 
         backgroundImage: `url(${process.env.PUBLIC_URL + '/layer3.svg'})` 
       }}></div>  
     </div>
@@ -278,7 +278,7 @@ function RiwayatTes() {
       <div className="spacer" style={{ 
         backgroundImage: `url(${process.env.PUBLIC_URL + '/layer1.svg'})` 
       }}></div>
-      <div className = "form pb-5">
+      <div className = "form">
         <Form>
           <Form.Group>
             <Form.Label className="text-white fw-bold">Query:</Form.Label>
@@ -306,8 +306,8 @@ function RiwayatTes() {
       </div>
       {
         (submitting && items != null &&
-        <div className="testResult pb-5">
-          <Table className="mb-0 pb-5 text-white" size="sm">
+        <div className="testResult pt-5">
+          <Table className="mb-0 pb-5 text-white" responsive size="sm">
             <thead>
               <tr>
                 <th>No.</th>
@@ -331,13 +331,13 @@ function RiwayatTes() {
           </Table>
         </div>) ||
         (submitting && items == null &&
-        <div className="testResult pb-5">
+        <div className="testResult pt-5">
           <Alert className="mb-0" variant="danger">
             <p className="mb-0">Mohon maaf, riwayat tidak ditemukan!</p>
           </Alert>
         </div>)
       }
-      <div className="spacer" style={{ 
+      <div className="bottomSpacer" style={{ 
         backgroundImage: `url(${process.env.PUBLIC_URL + '/layer3.svg'})` 
       }}></div>  
     </div>
