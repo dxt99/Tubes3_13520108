@@ -281,7 +281,7 @@ func riwayatTes(w http.ResponseWriter, r *http.Request) {
 				temp.IsSakit = true
 			}
 			t, _ := time.Parse("2006-01-02T15:04:05Z", temp.Tanggal)
-			temp.Tanggal = t.Format("2006-01-02")
+			temp.Tanggal = t.Format("02-01-2006")
 			result.Result = append(result.Result, temp)
 		}
 
