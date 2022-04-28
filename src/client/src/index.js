@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { BrowserRouter, Link, Routes, Route } from 'react-router-dom';
-import { Button, Form, Table, Alert, Spinner } from 'react-bootstrap';
+import { Button, Form, Table, Alert, Spinner, ListGroup } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import HomeIcon from '@mui/icons-material/Home';
 import CoronavirusIcon from '@mui/icons-material/Coronavirus';
@@ -16,13 +16,13 @@ function SideBars(title, paragraph){
     <div>
       <div className = "titleBar">
         <h1 className = "titleHeading mb-3">{title}</h1>
-        <p className = "paragraph mb-5">{paragraph}</p>
+        <p className = "paragraph">{paragraph}</p>
       </div>
       <div className="box">
         <div className= "logo">{"Malignant"}</div>
         <Link className="sidebarList" to='/' style={{ textDecoration: 'none' }}>
           <div className="sidebarIcon"><HomeIcon/></div>
-          <div className="sidebarMenu">{"About"}</div>
+          <div className="sidebarMenu">{"Home"}</div>
         </Link>
         <Link className="sidebarList" to='/tambahPenyakit' style={{ textDecoration: 'none' }}>
           <div className="sidebarIcon"><CoronavirusIcon/></div>
@@ -44,7 +44,29 @@ function SideBars(title, paragraph){
 function Home(){
   return (
     <div>
-      {SideBars("Tentang Kami")}
+      <div>
+      {SideBars("Selamat Datang di Malignant!", `
+      Website ini dibuat dalam rangka memenuhi tugas mata kuliah IF2211 Strategi Algoritma yang
+      berjudul "Penerapan String Matching dan Regular Expression dalam
+      DNA Pattern Matching". Pada website ini, Anda bisa melakukan deteksi penyakit berdasarkan file teks
+      yang berisi rantai DNA. Deteksi tersebut berdasarkan pattern matching menggunakan algoritma
+      pencocokan string KMP dan Booyer-Moore.
+      `)}
+      </div>
+      <div className="spacer" style={{ 
+        backgroundImage: `url(${process.env.PUBLIC_URL + '/layer1.svg'})` 
+      }}></div>
+      <div className="form">
+      <h3 className="text-white pb-2">Created by:</h3>
+      <ListGroup as="ol" numbered>
+        <ListGroup.Item variant="success">13520108 - Muhammad Rakha Athaya</ListGroup.Item>
+        <ListGroup.Item variant="success">13520118 - Mohamad Daffa Argakoesoemah</ListGroup.Item>
+        <ListGroup.Item variant="success">13520163 - Frederik Imanuel Louis</ListGroup.Item>
+      </ListGroup>
+      </div>
+      <div className="bottomSpacer" style={{ 
+        backgroundImage: `url(${process.env.PUBLIC_URL + '/layer3.svg'})` 
+      }}></div>
     </div>
   );
 }
@@ -311,6 +333,7 @@ function RiwayatTes() {
             <thead>
               <tr>
                 <th>No.</th>
+                <th>Tanggal</th>
                 <th>Nama</th>
                 <th>Penyakit</th>
                 <th>Similarity</th>
@@ -321,6 +344,7 @@ function RiwayatTes() {
               {items.map((item, index) => 
                 <tr key = {index}>
                   <td>{index + 1}</td>
+                  <td>{item.tanggal}</td>
                   <td>{item.pengguna}</td>
                   <td>{item.penyakit}</td>
                   <td>{String(item.similarity) + "%"}</td>

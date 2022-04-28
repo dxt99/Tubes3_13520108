@@ -120,6 +120,7 @@ body {
 
 .paragraph {
   font-size: 18px;
+  display: inline-block;
 }
 
 .result{
@@ -167,7 +168,7 @@ body {
 }
 
 .bottomSpacer {
-  aspect-ratio: 960/250;
+  aspect-ratio: 960/300;
   width: 100%;
   background-repeat: no-repeat;
   background-position: center;
