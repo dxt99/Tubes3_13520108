@@ -71,7 +71,7 @@ function TambahPenyakit() {
     promise.then(function(resolvedValue) {
       data["DNA"] = resolvedValue;
       console.log(data);
-      axios.post("http://localhost:3001/TambahPenyakit", data).then(response => {
+      axios.post("https://malignantdb.herokuapp.com/TambahPenyakit", data).then(response => {
         console.log(response);
         console.log(response.data);
         setItems(response.data);
@@ -146,7 +146,7 @@ function TesDNA() {
     promise.then(function(resolvedValue) {
       data["DNA"] = resolvedValue;
       console.log(data);
-      axios.post("http://localhost:3001/TesDNA", data).then(response => {
+      axios.post("https://malignantdb.herokuapp.com/TesDNA", data).then(response => {
         console.log(response);
         console.log(response.data);
         console.log(typeof(response.data));
@@ -263,7 +263,7 @@ function RiwayatTes() {
   const onSubmit = (data) => {
     setLoading(true);
     console.log(data);
-    axios.post("http://localhost:3001/RiwayatTes", data).then(response => {
+    axios.post("https://malignantdb.herokuapp.com/RiwayatTes", data).then(response => {
         console.log(response);
         console.log(response.data.result);
         setItems(response.data.result);
