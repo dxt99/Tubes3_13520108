@@ -3,9 +3,22 @@
 Aplikasi string matching DNA bernama Malignant dibuat dalam bentuk website yang dapat diakses pada https://malignant.netlify.app. Website memilki fitur tes DNA dimana pengguna dapat mengetes DNAnya dengan salah satu dari penyakit yang ada di database malignant. Penyakit dapat pula ditambahkan dengan fitur tambah penyakit, dan seluruh hasil tes dapat dilihat pada menu riwayat tes.
 
 Website ini dibuat oleh:
-- Muhammad Rakha Athaya
-- Mohamad Daffa Argakoesoemah
-- Frederik Imanuel Louis
+- 13520108 - Muhammad Rakha Athaya
+- 13520118 - Mohamad Daffa Argakoesoemah
+- 13520163 - Frederik Imanuel Louis
+
+## Struktur Folder
+- `src` : source code program
+- `test` : script database dan contoh file teks raw data DNA
+- `doc` : laporan
+
+## Fitur
+1. Pengguna dapat menambahkan penyakit baru berdasarkan masukan file teks rantai DNA
+2. Pengguna dapat melakukan tes prediksi penyakit berdasarkan masukan prediksi penyakit dan file teks rantai DNA seseorang
+3. Pengguna dapat melihat hasil prediksi penyakitnya
+4. Pengguna dapat mencari riwayat tes berdasarkan query yang dimasukkan
+5. Pengguna dapat melihat tingkat kemiripan rantai DNA-nya dengan rantai DNA penyakit prediksi setelah melakukan tes
+
 ## Requirement Program
 
 ### Frontend
