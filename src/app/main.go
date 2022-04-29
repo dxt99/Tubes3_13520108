@@ -203,7 +203,7 @@ func tesDNA(w http.ResponseWriter, r *http.Request) {
 
 		// Send result
 		var result Result
-		result.Tanggal = time.Now().Format("2006-01-02")
+		result.Tanggal = time.Now().Format("02-01-2006")
 		result.Pengguna = pengguna
 		result.Penyakit = nama
 		result.Similarity = int(similarity * 100)
